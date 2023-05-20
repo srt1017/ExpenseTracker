@@ -5,9 +5,7 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ExpenseFilter from "./components/ExpenseFilter";
 import ExpenseForm from "./components/ExpenseForm";
-
-
-export const categories = ["Groceries", "Utilities", "Entertainment"]
+import categories from "./categories";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
