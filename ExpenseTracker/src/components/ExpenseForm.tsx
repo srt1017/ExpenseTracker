@@ -7,21 +7,26 @@ const schema = z.object({
   description: z.string().min(2, {message: 'Description should be at least two characters.'}).max(50),
   amount: z.number({invalid_type_error: 'Amount needs to be a number.'}).min(0.01,).max(100_000),
   category: z.enum(categories, {
-    errorMap: () => ({ message: 'Category is required'})
+    errorMap: () => ({ message: 'Category is required.'})
   }),
 });
 
 type ExpenseFormData = z.infer<typeof schema>;
 
-const ExpenseForm = () => {
+interface Props {
+    onSubmit: (data: ExpenseFormData) => void;
+}
+
+const ExpenseForm = ({onSubmit}: Props) => {
   const {
     register,
     handleSubmit,
+    reset, 
     formState: { errors },
   } = useForm<ExpenseFormData>({ resolver: zodResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(data => console.log(data))}>
+    <form onSubmit={handleSubmit(data => { onSubmit(data); reset()} )}>
       <div className="mb-3">
         <label htmlFor="description" className="form-label">
           Description
